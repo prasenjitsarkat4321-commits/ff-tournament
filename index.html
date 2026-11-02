@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZETSU ESPORTS - Free Fire Tournaments</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans min-h-screen pb-16">
+
+    <!-- Header -->
+    <header class="bg-slate-900 border-b border-slate-800 p-4 sticky top-0 z-50 flex justify-between items-center shadow-lg">
+        <div class="flex items-center space-x-2">
+            <div class="bg-red-600 text-white font-black px-2.5 py-1 rounded tracking-wider text-sm shadow-md">ZETSU</div>
+            <h1 class="font-bold text-lg tracking-wide text-white">ESPORTS</h1>
+        </div>
+        <div class="flex items-center space-x-3 bg-slate-800 px-3 py-1.5 rounded-full border border-slate-700">
+            <i class="fa-solid fa-wallet text-yellow-400"></i>
+            <span class="font-bold text-sm text-yellow-400" id="userWallet">₹0</span>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="max-w-md mx-auto p-4 space-y-4">
+
+        <!-- Banner Card -->
+        <div class="bg-gradient-to-r from-red-900 via-slate-900 to-slate-900 border border-red-600/30 rounded-2xl p-5 shadow-xl relative overflow-hidden">
+            <div class="relative z-10">
+                <span class="bg-red-600/20 text-red-400 text-xs px-2.5 py-1 rounded-full font-semibold border border-red-500/30 uppercase tracking-widest">Free Fire Daily Battles</span>
+                <h2 class="text-xl font-black mt-2 text-white">Win Cash & Rewards Daily!</h2>
+                <p class="text-xs text-slate-400 mt-1">Join solo/squad custom rooms, get Room ID & Password instantly.</p>
+                <button onclick="switchTab('addMoney')" class="mt-4 bg-red-600 hover:bg-red-500 text-white font-bold text-xs px-4 py-2 rounded-xl shadow-lg transition active:scale-95">
+                    <i class="fa-solid fa-plus mr-1"></i> Add Money
+                </button>
+            </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="flex bg-slate-900 p-1 rounded-xl border border-slate-800">
+            <button onclick="switchTab('tournaments')" id="tabBtn-tournaments" class="flex-1 py-2 text-xs font-bold rounded-lg bg-red-600 text-white transition">Tournaments</button>
+            <button onclick="switchTab('myMatches')" id="tabBtn-myMatches" class="flex-1 py-2 text-xs font-bold rounded-lg text-slate-400 hover:text-white transition">My Matches</button>
+            <button onclick="switchTab('profile')" id="tabBtn-profile" class="flex-1 py-2 text-xs font-bold rounded-lg text-slate-400 hover:text-white transition">Profile</button>
+        </div>
+
+        <!-- Tab 1: Tournaments List -->
+        <div id="tab-tournaments" class="space-y-3">
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-md">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <span class="text-[10px] bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded font-bold border border-emerald-500/20">SOLO FULL MAP</span>
+                        <h3 class="font-bold text-sm mt-1 text-white">#1 Free Fire Daily Clash</h3>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-xs text-slate-400 block">Prize Pool</span>
+                        <span class="font-extrabold text-yellow-400 text-sm">₹500</span>
+                    </div>
+                </div>
+                <div class="grid grid-cols-3 gap-2 my-3 text-center bg-slate-950 p-2.5 rounded-xl border border-slate-800/60 text-xs">
+                    <div>
+                        <span class="text-slate-400 block text-[10px]">Entry Fee</span>
+                        <span class="font-bold text-white">₹15</span>
+                    </div>
+                    <div>
+                        <span class="text-slate-400 block text-[10px]">Per Kill</span>
+                        <span class="font-bold text-emerald-400">₹8</span>
+                    </div>
+                    <div>
+                        <span class="text-slate-400 block text-[10px]">Map</span>
+                        <span class="font-bold text-white">Bermuda</span>
+                    </div>
+                </div>
+                <button onclick="joinTournament('Free Fire Daily Clash', 15)" class="w-full bg-red-600 hover:bg-red-500 text-white font-bold py-2.5 rounded-xl text-xs shadow-md transition active:scale-98">
+                    Join Match (₹15)
+                </button>
+            </div>
+        </div>
+
+        <!-- Tab 2: My Matches -->
+        <div id="tab-myMatches" class="space-y-3 hidden">
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 text-center">
+                <p class="text-xs text-slate-400 mb-3">You haven't joined any matches yet.</p>
+                <button onclick="switchTab('tournaments')" class="bg-slate-800 text-white text-xs px-4 py-2 rounded-xl border border-slate-700 font-semibold">Explore Tournaments</button>
+            </div>
+        </div>
+
+        <!-- Tab 3: Profile & Add Money -->
+        <div id="tab-addMoney" class="space-y-3 hidden">
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3">
+                <h3 class="font-bold text-sm text-white"><i class="fa-solid fa-wallet text-yellow-400 mr-2"></i>Add Funds to Wallet</h3>
+                <p class="text-xs text-slate-400">Select amount to simulate adding funds instantly for testing:</p>
+                <div class="grid grid-cols-3 gap-2">
+                    <button onclick="addMoney(50)" class="bg-slate-800 hover:bg-slate-700 border border-slate-700 py-2 rounded-xl text-xs font-bold">+ ₹50</button>
+                    <button onclick="addMoney(100)" class="bg-slate-800 hover:bg-slate-700 border border-slate-700 py-2 rounded-xl text-xs font-bold">+ ₹100</button>
+                    <button onclick="addMoney(500)" class="bg-slate-800 hover:bg-slate-700 border border-slate-700 py-2 rounded-xl text-xs font-bold">+ ₹500</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab-profile" class="space-y-3 hidden">
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 text-center space-y-2">
+                <div class="w-16 h-16 bg-red-600/20 border border-red-500/30 rounded-full flex items-center justify-center mx-auto text-red-500 text-xl font-black">Z</div>
+                <h3 class="font-bold text-white text-sm">ZETSU PLAYER</h3>
+                <p class="text-xs text-slate-400">UID: 43219082xx</p>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- JavaScript Logic -->
+    <script>
+        let walletBalance = 0;
+
+        function updateWalletUI() {
+            document.getElementById('userWallet').innerText = '₹' + walletBalance;
+        }
+
+        function switchTab(tabName) {
+            ['tournaments', 'myMatches', 'addMoney', 'profile'].forEach(t => {
+                document.getElementById('tab-' + t).classList.add('hidden');
+                if(document.getElementById('tabBtn-' + t)) {
+                    document.getElementById('tabBtn-' + t).classList.remove('bg-red-600', 'text-white');
+                    document.getElementById('tabBtn-' + t).classList.add('text-slate-400');
+                }
+            });
+            document.getElementById('tab-' + tabName).classList.remove('hidden');
+            if(document.getElementById('tabBtn-' + tabName)) {
+                document.getElementById('tabBtn-' + tabName).classList.add('bg-red-600', 'text-white');
+                document.getElementById('tabBtn-' + tabName).classList.remove('text-slate-400');
+            }
+        }
+
+        function addMoney(amount) {
+            walletBalance += amount;
+            updateWalletUI();
+            alert('Successfully added ₹' + amount + ' to your wallet!');
+            switchTab('tournaments');
+        }
+
+        function joinTournament(matchName, fee) {
+            if (walletBalance < fee) {
+                alert('Insufficient balance! Please add money to your wallet first.');
+                switchTab('addMoney');
+                return;
+            }
+            walletBalance -= fee;
+            updateWalletUI();
+            alert('Successfully joined ' + matchName + '! Room ID and Password will be visible 15 minutes before match start.');
+        }
+    </script>
+</body>
+</html>
